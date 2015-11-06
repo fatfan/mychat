@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>我的聊天室</title>
+	<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+	html,body{
+		height: 100%;
+	}
+	.g-wp{
+		position: relative;
+		width: 100%;
+		/*height: 100%;*/
+		min-width: 920px;
+		min-height: 100%;
+	}
+	.g-hd{
+		height: 50px;
+		background-color: #222;
+	}
+	.g-bd{
+		margin-top: 20px;
+		padding-bottom: 72px;
+		/*background-color: #acc;*/
+	}
+	.g-ft{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 72px;
+		background-color: #efe;
+	}
+	.m-hd, .m-cnt, .m-ft{
+		width: 900px;
+		margin: 0 auto;
+		padding: 0 10px;
+	}
+	.m-hd{
+		line-height: 48px;
+		color: #25d;
+	}
+	.m-hd a{
+		text-decoration: none;
+		color: #25d;
+		display: inline-block;
+	    width: 60px;
+	    text-align: center;
+	}
+	.m-hd a.cur{
+		border-bottom: 2px solid #25d;
+	}
+	.m-cnt{
+		position: relative;
+		width: 900px;
+		margin: 0 auto;
+		/*background-color: #c4d;*/
+	}
+	.m-ft{
+		text-align: center;
+		line-height: 48px;
+		color: #888;
+	}
+	</style>
+	<link rel="stylesheet" type="text/css" href="static/css/style.css">
+</head>
+<body>
+	<div class="g-wp">
+		<div class="g-hd">
+			<div class="m-hd">
+				<a class="cur" href="">首页</a>
+				<a href="">关于</a>
+			</div>
+		</div>
+		<div class="g-bd">
+			<div id="mychat" class="m-cnt">
+				<div class="login">
+					<script type="text/template" id="tpl_login">
+					</script>
+					<div class="m-login" method="post" action="login">
+						<h1>登录</h1>
+						<input type="text" name="user" class="user">
+						<input type="password" name="pass" class="pass">
+					    <label class="checkbox">
+					        <input type="checkbox" value="remember-me"> 记住我
+					    </label>
+						<input type="button" id="btnLogin" class="submit" value="登录">
+					</div>
+					<div class="m-login" method="post" action="login">
+						<h1>快速注册</h1>
+						<input type="text" id="reg_user" name="user" class="user">
+						<input type="password" id="reg_pass" name="pass" class="pass">
+						<input type="button" id="btnRegister" class="submit" value="注册">
+					</div>
+				</div>
+				<div class="main">
+					<div class="section_topic">
+						<div class="m-topicList f-cb">
+						</div>
+						<div class="m-createTopic">
+							<p>新建话题</p>
+							<input type="text" id="topicTitle" class="title u-input">
+							<input type="button" id="btnAddTopic" class="u-btn" value="创建话题">
+						</div>
+					</div>
+					<div class="section_message" style="display:none">
+						<a href="">返回列表</a>
+
+						<div class="m-messageBox">
+							<h2>#话题标题#</h2>
+							<div class="f-cb">
+								<div class="u-message left">
+									<p>ff</p>
+									<p>2015-09-23</p>
+									<div class="message">吃饭了么</div>
+								</div>
+							</div>
+							<div class="f-cb">
+								<div class="u-message right">
+									<p>ff</p>
+									<p>2015-09-23</p>
+									<div class="message">吃饭了么</div>
+								</div>
+							</div>
+							<div class="f-cb">
+								<div class="u-message left">
+									<p>ff</p>
+									<p>2015-09-23</p>
+									<div class="message left">吃饭了么</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="g-ft">
+			<div class="m-ft">我的聊天室 by fwh &copy;2015</div>
+		</div>
+	</div>
+	<script type="text/template" id="tpl_topic">
+		<h2>#<%= title %>#</h2>
+		<p>创建者：<%= owner_name %></p>
+		<p>创建时间：<%= created_time %> </p>
+	</script>
+	<script type="text/template" id="tpl_status">
+		<% if(done) { %>
+			<a id="clear-completed">清除 <%=done%> 项已完成</a>
+		<% } %>
+		<div class="todoCount"><b><%=remaining%></b> 项待办</div>
+	</script>
+	<script src="static/js/json2.js"></script>
+	<script src="static/js/jquery-1.11.3.js"></script>
+    <script src="static/js/underscore.js"></script>
+    <script src="static/js/backbone.js"></script>
+
+    <script type="text/javascript" src="static/js/app.js"></script>
+</body>
+</html>

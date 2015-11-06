@@ -1,0 +1,12 @@
+<form class="m-login" method="post" action="login">
+	<h1>登录</h1>
+	<input type="text" name="user" class="user">
+	<input type="password" name="pass" class="pass">
+	{% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+    <label class="checkbox">
+        <input type="checkbox" value="remember-me"> 记住我
+    </label>
+	<input type="submit" class="submit" value="登录">
+</form>

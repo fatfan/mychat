@@ -1,0 +1,148 @@
+
+.login{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 999;
+}
+.m-login{
+	width: 200px;
+	margin: 0 auto;
+}
+
+.m-login .user{
+	height: 30px;
+    width: 100%;
+    border: 1px solid #acc;
+}
+.m-login .pass{
+	height: 30px;
+    width: 100%;
+    border: 1px solid #acc;
+    border-top: 0;
+}
+.m-login .submit{
+	width: 100%;
+    height: 30px;
+    background: #40C8E6;
+    border: 1px solid #40c8e6;
+    color: #fff;
+    font-size: 20px;
+}
+.m-login .alert{
+	color: #e00;
+}
+.m-createTopic {
+    margin: 4px;
+    border: 1px solid #cce;
+    padding: 10px;
+}
+.m-createTopic p{
+    margin-bottom: 10px;
+    color: #DECC4E;
+}
+
+.m-messageBox {
+    width: 600px;
+    margin: 10px auto;
+    border: 2px solid #acc;
+    padding: 10px;
+}
+.m-messageBox h2 {
+    color: #40c8e6;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #9df;
+}
+
+/*原件*/
+.u-topic {
+    float: left;
+    position: relative;
+    overflow: hidden;
+    width: 160px;
+    /*height: 63px;*/
+    margin: 4px;
+    border: 1px solid #40C8E6;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: 2px 2px 4px #ccc;
+    color: #5bf;
+    /*transition: border-radius 1s, border 1s;*/
+}
+.u-topic:hover{
+    border-color: #DECB45;
+    /*box-shadow: 2px 2px 4px #C7BB71;*/
+    left: -2px;
+    top: -2px;
+    cursor: pointer;
+}
+.u-message{
+    float: left;
+}
+.u-message.right{
+    float: right;
+    text-align: right;
+}
+.u-message .message {
+    position: relative;
+    margin: 5px 20px;
+    padding: 10px;
+    background-color: #fcf0ce;
+    border-radius: 10px;
+}
+.u-message.left .message::after{
+    content: "";
+    display: block;
+    position: absolute;
+    left: -20px;
+    top: 8px;
+    border-width: 5px 11px;
+    border-style: solid;
+    border-color: #fcf0ce #fcf0ce transparent transparent;
+    width: 0;
+    height: 0;
+}
+.u-message.right .message::after{
+    content: "";
+    display: block;
+    position: absolute;
+    right: -20px;
+    top: 8px;
+    border-width: 5px 11px;
+    border-style: solid;
+    border-color: #fcf0ce transparent transparent #fcf0ce;
+    width: 0;
+    height: 0;
+}
+.u-btn{
+    /* width: 100%; */
+    padding: 0 10px;
+    height: 36px;
+    line-height: 36px;
+    background: #40C8E6;
+    border: 1px solid #40c8e6;
+    color: #fff;
+    border-radius: 2px;
+    font-size: 20px;
+}
+.u-input {
+    height: 48px;
+    /*width: 540px;*/
+    /*padding: 0 29px;*/
+    border: 1px solid #8CC;
+    font-size: 20px;
+    color: #26a;
+}
+
+
+.f-cb:after{
+    content: ".";
+    display: block;
+    visibility: none;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+}
+.f-cb{zoom:1;}
