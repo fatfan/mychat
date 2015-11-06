@@ -12,9 +12,20 @@
     });
     var Topics = Backbone.Collection.extend({
     	url: '/topic',
-    	model: Topic
+    	model: Topic,
+    	getTopic:function(topic_id){
+    		return this.where({id:1});
+    	}
     });
     var topics = new Topics;
+    var Message = Backbone.Model.extend({
+    	urlRoot: '/message'
+    });
+    var Messages = Backbone.Collection.extend({
+    	url: '/message',
+    	model: Message
+    });
+
 	var LoginView = Backbone.View.extend({
 		el:$(".login"),
 		wrap:$(".login"),
@@ -87,27 +98,76 @@
         	return this;
         }
 	});
+	var MessageView = Backbone.View.extend({
+		tagName:  "div",
+        template: _.template($('#tpl_message').html()),
+
+        // 渲染列表页模板
+        render: function() {
+        	$(this.el).html(this.template(this.model.toJSON()));
+        	$(this.el).addClass("f-cb");
+        	return this;
+        }
+	});
+	var messages= new Messages;
 	var AppView = Backbone.View.extend({
 		el:".main",
 		topic_section:$(".section_topic"),
 		message_section:$(".section_message"),
+		message_list:$(".m-msgList"),
 
 		initialize:function(){
 			topics.bind("add",this.addTopic);
+			messages.bind("add",this.addMsg);
+			this.message_pool = {};
 		},
 		events:{
-			"click #btnAddTopic":"onClickAddTopic"
+			"click #btnAddTopic":"onClickAddTopic",
+			"click #btnSendMsg":"onClickSendMsg"
 		},
 		showTopic:function(){
 			topics.fetch();
 			this.topic_section.show();
             this.message_section.hide();
-            //this.message_list.html('');
+            this.message_list.html('');
 		},
+		testAdd:function(){
+			alert("text");
+		},
+		/*
+		initMessage:function(topic_id){
+			var messages = new Messages;
+            messages.bind('add', this.addMsg);
+            this.message_pool[topic_id] = messages;
+		},*/
 		showMessage:function(topic_id){
+			//this.initMessage(topic_id);
+			//var messages = this.message_pool[topic_id];
+			messages.fetch({
+				data: {topic_id: topic_id}
+			});
+			
 			this.topic_section.hide();
 			this.message_section.show();
+			//var e= topics.where({"topic_id":topic_id});
+			//var e=topics.getTopic(topic_id);
+			//var t=e[0].get("title");
+			//$("#topic_title").html(t);
+			this.showMessageHead(topic_id);
+			$('#msgTitle').attr('topic_id', topic_id);
 		},
+		showMessageHead: function(topic_id) {
+            var topic = new Topic({id: topic_id});
+            self = this;
+            topic.fetch({
+                success: function(resp, model, options){
+                    $("#topic_title").html(model.title);
+                },
+                error: function(model, resp, options) {
+                    alert(resp.responseText);
+                }
+            });
+        },
 		onClickAddTopic:function(){
 			var topic_title=$("#topicTitle");
 			if (topic_title.val() == '') {
@@ -132,7 +192,48 @@
 			var ele=new TopicView({model:topic});
 			var view=ele.render().el;
 			$(".m-topicList").append(ele.render().el);
-		}
+		},
+		onClickSendMsg:function(){
+			var comment_box = $('#msgTitle')
+            var content = comment_box.val();
+            if (content == '') {
+                alert('内容不能为空');
+                return false;
+            }
+            var topic_id = comment_box.attr('topic_id');
+            var message = new Message({
+                content: content,
+                topic_id: topic_id,
+            });
+
+            message.save(null,{
+            	success: function(){
+            		//messages.add()
+            		alert("send success");
+            		messages.reset();
+            	},
+            	error: function(){
+            		alert("消息发送失败");
+            	}
+            }); // 依赖上面对sync的重载
+            //var messages = this.message_pool[topic_id];
+            var tmp={
+            	"user_id": g_user.id, 
+            	"is_mine": true, 
+            	"content": content, 
+            	"topic_id": topic_id, 
+            	"created_time": (new Date()).toLocaleString(), 
+            	"user_name": g_user.username, 
+            	"id": 10000
+            }
+            messages.add(tmp);
+            comment_box.val('');
+		},
+		addMsg:function(message){
+			var ele=new MessageView({model:message});
+			var view=ele.render().el;
+			$(".m-msgList").append(ele.render().el);
+		},
 	});
 	var AppRouter = Backbone.Router.extend({
         routes: {
