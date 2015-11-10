@@ -149,7 +149,10 @@
     border: 0;
     border-right: 1px solid #8cc;
 }
-
+.u-sep{
+    border-top: 1px solid #9BB3CA;
+    margin: 40px 0;
+}
 
 .f-cb:after{
     content: ".";

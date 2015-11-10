@@ -1,5 +1,10 @@
 (function($){
 	//alert(1);
+    var socket = io.connect();
+    socket.on('connect', function(){
+        console.log('connected');
+    });
+
 	var User = Backbone.Model.extend({
         urlRoot: '/user',
         /*defaults:{
@@ -19,7 +24,16 @@
     });
     var topics = new Topics;
     var Message = Backbone.Model.extend({
-    	urlRoot: '/message'
+    	urlRoot: '/message',
+        sync: function(method, model, options) {
+            if (method === 'create') {
+                socket.emit('message', model.attributes);
+                // 错误处理没做
+                $('#comment').val('');
+            } else {
+                return Backbone.sync(method, model, options);
+            };
+        }
     });
     var Messages = Backbone.Collection.extend({
     	url: '/message',
@@ -143,6 +157,11 @@
 		showMessage:function(topic_id){
 			//this.initMessage(topic_id);
 			//var messages = this.message_pool[topic_id];
+            socket.emit('topic', topic_id);
+            // 监听message事件，添加对话到messages中
+            socket.on('message', function(response) {
+                messages.add(response);
+            });
 			messages.fetch({
 				data: {topic_id: topic_id}
 			});
