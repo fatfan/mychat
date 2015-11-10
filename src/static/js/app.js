@@ -19,7 +19,7 @@
     	url: '/topic',
     	model: Topic,
     	getTopic:function(topic_id){
-    		return this.where({id:1});
+    		return this.where({"id":topic_id});
     	}
     });
     var topics = new Topics;
@@ -118,7 +118,11 @@
 
         // 渲染列表页模板
         render: function() {
-        	$(this.el).html(this.template(this.model.toJSON()));
+            var _model=this.model.toJSON();
+            var time=_model.created_time;
+            time=time.substring(0,time.indexOf("."));
+            _model.created_time= time;
+        	$(this.el).html(this.template(_model));
         	$(this.el).addClass("f-cb");
         	return this;
         }
